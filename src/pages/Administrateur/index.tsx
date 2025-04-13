@@ -22,7 +22,7 @@ const Administrateur = () => {
 
     return (
         <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <h2>Scan QR Code for Administrateur</h2>
+            <h2>Page réservée pour marqueur, veuillez scanner le QR code</h2>
             <QrReader
                 delay={300}
                 style={{ width: "100%", maxWidth: "500px", height: "auto" }}

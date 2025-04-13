@@ -27,7 +27,7 @@ const Archer = () => {
 
     return (
         <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Scanner le QR code</h2>
+            <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Page réservée pour archer, veuillez scanner le QR code</h2>
 
             {/* Le scanner QR avec la caméra */}
             <QrReader
