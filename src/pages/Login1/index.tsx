@@ -14,7 +14,7 @@ const Login = () => {
         }
 
         try {
-            const response = await fetch(`https://10.192.108.185:8443/clubsUtilisateurs/licence/${licenseNumber}`);
+            const response = await fetch(`https://192.168.137.1:8443/clubsUtilisateurs/licence/${licenseNumber}`);
             if (!response.ok) throw new Error("Utilisateur non trouvé");
 
             const user = await response.json();

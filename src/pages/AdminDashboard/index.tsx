@@ -2,56 +2,67 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
-// Mock data for archers and targets
-const mockArchers = [
-    { id: "archer1", targetId: "target1", name: "Archer 1" },
-    { id: "archer2", targetId: "target2", name: "Archer 2" },
-    { id: "archer3", targetId: "target1", name: "Archer 3" },
-    { id: "archer4", targetId: "target3", name: "Archer 4" },
-];
+import axios from "axios";
+
+interface Archer {
+    id: string;
+    licenseNumber: string;
+    score: number | null;
+}
 
 const AdminDashboard = () => {
-    const { cibleId } = useParams<{ cibleId: string }>(); // Get targetId from URL params
-    const [archers, setArchers] = useState<any[]>([]);
+    const { cibleId } = useParams<{ cibleId: string }>();
     const history = useHistory();
+    const [archers, setArchers] = useState<Archer[]>([]);
 
     useEffect(() => {
-        // Filter archers based on the targetId
-        const filteredArchers = mockArchers.filter(
-            (archer) => archer.targetId === cibleId
-        );
-        setArchers(filteredArchers);
+        // Fetch archers from backend (replace with your real endpoint)
+        axios.get(`https://192.168.0.11:3000/clubsUtilisateurs/licence/${cibleId}`)
+            .then((res) => setArchers(res.data))
+            .catch((err) => console.error("Error fetching archers", err));
     }, [cibleId]);
 
-    const handleEditArcher = (archerId: string) => {
-        // Redirect to edit page for the specific archer
-        history.push(`/edit-archer/${archerId}`);
+    const handleEditScore = (archerId: string) => {
+        history.push(`/edit-score/${archerId}`);
     };
 
     return (
-        <div style={{ padding: "20px", textAlign: "center" }}>
+        <div style={{ padding: "20px" }}>
             <h2>Admin Dashboard</h2>
             <h3>Target ID: {cibleId}</h3>
-            <div style={{ marginTop: "20px" }}>
-                <h4>Archers Connected to this Target:</h4>
-                {archers.length > 0 ? (
-                    <ul>
-                        {archers.map((archer) => (
-                            <li key={archer.id}>
-                                <span>{archer.name}</span>
-                                <button onClick={() => handleEditArcher(archer.id)}>
-                                    Modify
+
+            {archers.length > 0 ? (
+                <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px" }}>
+                    <thead>
+                    <tr>
+                        <th style={{ border: "1px solid #ccc", padding: "10px" }}>License Number</th>
+                        <th style={{ border: "1px solid #ccc", padding: "10px" }}>Score</th>
+                        <th style={{ border: "1px solid #ccc", padding: "10px" }}>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {archers.map((archer) => (
+                        <tr key={archer.id}>
+                            <td style={{ border: "1px solid #ccc", padding: "10px" }}>{archer.licenseNumber}</td>
+                            <td style={{ border: "1px solid #ccc", padding: "10px" }}>
+                                {archer.score !== null ? archer.score : "Not registered"}
+                            </td>
+                            <td style={{ border: "1px solid #ccc", padding: "10px" }}>
+                                <button onClick={() => handleEditScore(archer.id)}>
+                                    {archer.score !== null ? "Modify Score" : "Register Score"}
                                 </button>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No archers connected to this target.</p>
-                )}
-            </div>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            ) : (
+                <p>No archers found for this target.</p>
+            )}
         </div>
     );
 };
 
 export default AdminDashboard;
+
 
