@@ -14,7 +14,7 @@ const AdminDashboard: React.FC = () => {
   const [archers, setArchers] = useState<Archer[]>([]);
 
   useEffect(() => {
-    axios.get(`/api/archers?cibleId=${cibleId}`).then((response) => {
+    axios.get(`https:192.168.137.1:8443/api/archers?cibleId=${cibleId}`).then((response) => {
       setArchers(response.data);
     });
   }, [cibleId]);

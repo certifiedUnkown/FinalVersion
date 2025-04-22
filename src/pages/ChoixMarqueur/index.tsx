@@ -15,7 +15,7 @@ const ChoixMarqueur: React.FC = () => {
   const [marqueurs, setMarqueurs] = useState<Marqueur[]>([]);
 
   useEffect(() => {
-    axios.get("/api/marqueurs").then((response) => {
+    axios.get("https://192.168.137.1:8443/api/marqueurs").then((response) => {
       setMarqueurs(response.data);
     });
   }, []);

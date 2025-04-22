@@ -32,6 +32,7 @@ const Login = () => {
                     break;
             }
         } catch (error) {
+            console.error("Erreur de fetch : ", error);
             alert("Aucun utilisateur trouvé avec ce numéro de licence.");
         }
     };
