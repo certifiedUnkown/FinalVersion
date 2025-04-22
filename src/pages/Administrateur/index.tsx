@@ -1,47 +1,24 @@
-import React, { useState } from "react";
-import QrReader from "react-qr-scanner";
+import React from "react";
 import { useHistory } from "react-router-dom";
 
-const Administrateur = () => {
-    const [result, setResult] = useState<string | null>(null);
-    const history = useHistory();
+const ScannerPage: React.FC = () => {
+  const history = useHistory();
 
-    // Handle QR code scan result
-    const handleScan = (data: any) => {
-        if (data) {
-            setResult(data.text);  // Store the scanned target ID
-            // Redirect to the dashboard page with the target ID
-            history.push(`/admin-dashboard/${data.text}`);
-        }
-    };
+  const handleQRCodeScanned = (cibleId: number, cibleNumero: number) => {
+    history.push("/choix-marqueur", { cibleId, cibleNumero });
+  };
 
-    // Handle errors during the scan
-    const handleError = (err: any) => {
-        console.error("Scan error:", err);
-    };
-
-    return (
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <h2>Page réservée pour marqueur, veuillez scanner le QR code</h2>
-            <QrReader
-                delay={300}
-                style={{ width: "100%", maxWidth: "500px", height: "auto" }}
-                onError={handleError}
-                onScan={handleScan}
-                constraints={{ video: { facingMode: "environment" } }} // Place it here
-            />
-            {/* Display the scanned result */}
-            {result && (
-                <div style={{ marginTop: "20px" }}>
-                    <h3>Scanned Target ID:</h3>
-                    <p>{result}</p>
-                </div>
-            )}
-        </div>
-    );
+  return (
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">Scanner une cible</h1>
+      <button
+        onClick={() => handleQRCodeScanned(1, 42)}
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        Simuler scan QR Code
+      </button>
+    </div>
+  );
 };
 
-export default Administrateur;
-
-
-
+export default ScannerPage;

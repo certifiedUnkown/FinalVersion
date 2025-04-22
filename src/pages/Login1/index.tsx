@@ -24,7 +24,7 @@ const Login = () => {
                 case "Archer":
                     history.push("/archer");
                     break;
-                case "Administrateur":
+                case "Marqueur":
                     history.push("/administrateur");
                     break;
                 default:

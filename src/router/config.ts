@@ -22,10 +22,16 @@ const routes = [
     exact: true,
   },
   {
-    path: "/admindashboard",
+    path: "/admin-dashboard",
     component: "AdminDashboard",
     exact: true,
   },
+  {
+    path: "/choix-marqueur",
+    component: "ChoixMarqueur",
+    exact: true,
+  },
+  
 
 
 ];
